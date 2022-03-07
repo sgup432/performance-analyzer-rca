@@ -273,7 +273,7 @@ targetCompatibility = 1.8
 compileJava {
     dependsOn spotlessApply
     JavaVersion targetVersion = JavaVersion.toVersion(targetCompatibility);
-    if (targetVersion.isJava9Compatible()) {
+    if (JavaVersion.current() > JavaVersion.VERSION_1_8) {
         options.compilerArgs += ["--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED"]
     }
 }
