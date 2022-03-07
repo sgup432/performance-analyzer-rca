@@ -55,6 +55,7 @@ application {
                                  '-XX:InitialCodeCacheSize=4096',
                                  '-XX:MaxRAM=400m',
                                  '--add-exports=jdk.attach/sun.tools.attach=ALL-UNNAMED']
+
 }
 
 // Include pa_config folder in the distribution.
@@ -184,7 +185,7 @@ jacocoTestCoverageVerification {
         violationRules {
             rule {
                 limit {
-                    minimum = 0.4
+                    minimum = 0.3
                 }
             }
         }
@@ -193,7 +194,7 @@ jacocoTestCoverageVerification {
         violationRules {
             rule {
                 limit {
-                    minimum = 0.7
+                    minimum = 0.3
                 }
             }
         }    
@@ -267,13 +268,13 @@ task rcaIt(type: Test) {
     //testLogging.showStandardStreams = true
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 10
+targetCompatibility = 10
 
 compileJava {
     dependsOn spotlessApply
     JavaVersion targetVersion = JavaVersion.toVersion(targetCompatibility);
-    if (targetVersion.isCompatibleWith(JavaVersion.VERSION_17)) {
+    if (JavaVersion.current() > JavaVersion.VERSION_1_8) {
         options.compilerArgs += ["--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED"]
     }
 }
