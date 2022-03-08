@@ -53,7 +53,8 @@ application {
                                  '-XX:CICompilerCount=1',
                                  '-XX:-TieredCompilation',
                                  '-XX:InitialCodeCacheSize=4096',
-                                 '-XX:MaxRAM=400m']
+                                 '-XX:MaxRAM=400m',
+                                 '--add-opens=jdk.attach/sun.tools.attach=ALL-UNNAMED']
 }
 
 // Include pa_config folder in the distribution.
