@@ -32,11 +32,13 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
@@ -186,6 +188,14 @@ public class ThreadList {
     // Attach to pid and perform a thread dump
     private static void runAttachDump(String pid, String[] args) {
         VirtualMachine vm = null;
+        // HotSpotVirtualMachine spotVirtualMachine = null;
+        System.setProperty("--add-opens", "jdk.attach/sun.tools.attach=ALL-UNNAMED");
+        RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+        List<String> arguments = runtimeMxBean.getInputArguments();
+        for (String str : arguments) {
+            LOGGER.info("Argument: {}", str);
+        }
+        LOGGER.info("Getting property: " + System.getProperty("--add-opens"));
         try {
             vm = VirtualMachine.attach(pid);
         } catch (Exception ex) {
